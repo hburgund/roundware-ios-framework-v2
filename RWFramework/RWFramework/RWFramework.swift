@@ -67,6 +67,7 @@ private lazy var __once: () = { () -> Void in
     // Flags
     var postUsersSucceeded = false
     var postSessionsSucceeded = false
+    var getProjectGroupsIdProjectsSucceeded = false
     var getProjectsIdSucceeded = false
     var getProjectsIdTagsSucceeded = false {
         didSet {

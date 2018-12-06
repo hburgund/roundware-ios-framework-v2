@@ -33,6 +33,11 @@ import CoreLocation
     @objc optional func rwGetProjectsIdSuccess(_ data: Data?)
     /// Sent when the server fails to send project information
     @objc optional func rwGetProjectsIdFailure(_ error: NSError?)
+    
+    /// Sent when project information has been received from the server
+    @objc optional func rwGetProjectGroupsIdProjectsSuccess(_ data: Data?)
+    /// Sent when the server fails to send project information
+    @objc optional func rwGetProjectGroupsIdProjectsFailure(_ error: NSError?)
 
     /// Sent when ui config has been received from the server
     @objc optional func rwGetUIConfigSuccess(_ data: Data?)
@@ -279,6 +284,23 @@ extension RWFramework {
                 self.dam { rwfp.rwGetProjectsIdFailure?(error) }
             } else {
                 self.alertOK(self.LS("RWFramework - rwGetProjectsIdFailure"), message: error!.localizedDescription)
+            }
+        }
+    }
+    
+    // MARK: projectgroups delegate call back success and failure methods
+    func rwGetProjectGroupsIdProjectSuccess(_ data: Data?) {
+        protocaller { (rwfp, _) -> Void in
+            self.dam { rwfp.rwGetProjectGroupsIdProjectsSuccess?(data) }
+        }
+    }
+    
+    func rwGetProjectGroupsIdProjectsFailure(_ error: NSError?) {
+        protocaller { (rwfp, _) -> Void in
+            if (rwfp.rwGetProjectsIdFailure != nil) {
+                self.dam { rwfp.rwGetProjectGroupsIdProjectsFailure?(error) }
+            } else {
+                self.alertOK(self.LS("RWFramework - rwGetProjectGroupsIdProjectsFailure"), message: error!.localizedDescription)
             }
         }
     }

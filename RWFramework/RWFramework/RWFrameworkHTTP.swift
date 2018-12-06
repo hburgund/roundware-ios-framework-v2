@@ -30,6 +30,17 @@ extension RWFramework: URLSessionDelegate, URLSessionTaskDelegate, URLSessionDat
             completion(nil, error)
         }
     }
+    
+    // MARK: GET methods projectgroups.
+    // Creates the URL object for the projectgroups GET request and pass the data object to load.
+    func httpGetProjectGroupsIdProjects(_ projectgroup_id: NSNumber, latitude: NSNumber, longitude: NSNumber, completion:@escaping (_ data: Data?, _ error: NSError?) -> Void) {
+        if let url = URL(string: RWFrameworkURLFactory.getProjectGroupsIdProjectsURL(projectgroup_id, latitude: latitude, longitude: longitude)) {
+            getDataFromURL(url, completion: completion)
+        } else {
+            let error = NSError(domain:self.reverse_domain, code:NSURLErrorBadURL, userInfo:[NSLocalizedDescriptionKey : "getProjectGroupsIdProjectsURL unable to be created."])
+            completion(nil, error)
+        }
+    }
 
     func httpGetProjectsId(_ project_id: NSNumber, session_id: NSNumber, completion:@escaping (_ data: Data?, _ error: NSError?) -> Void) {
         if let url = URL(string: RWFrameworkURLFactory.getProjectsIdURL(project_id, session_id: session_id)) {

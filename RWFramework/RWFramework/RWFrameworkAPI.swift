@@ -99,8 +99,7 @@ extension RWFramework {
         }
     }
 
-
-// MARK: GET projects id
+    // MARK: GET projects id
 
     func apiGetProjectsId(_ project_id: NSNumber, session_id: NSNumber) {
         httpGetProjectsId(project_id, session_id: session_id) { (data, error) -> Void in
@@ -163,6 +162,72 @@ extension RWFramework {
             print(error)
         }
     }
+    
+    // MARK: GET projectgroups
+    
+    func apiGetProjectGroupsIdProjects(_ projectgroup_id: NSNumber, latitude: NSNumber, longitude: NSNumber) {
+        httpGetProjectGroupsIdProjects(projectgroup_id, latitude: latitude, longitude: longitude) { (data, error) -> Void in
+            if (data != nil) && (error == nil) {
+                self.getProjectGroupsIdProjectsSuccess(data!, projectgroup_id: projectgroup_id)
+                self.rwGetProjectGroupsIdProjectSuccess(data)
+            } else if (error != nil) {
+                self.rwGetProjectGroupsIdProjectsFailure(error)
+                self.apiProcessError(data, error: error!, caller: "apiGetProjectGroupsIdProjects")
+            }
+        }
+    }
+    
+    func getProjectGroupsIdProjectsSuccess(_ data: Data, projectgroup_id: NSNumber) {
+        do {
+            let json = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.mutableContainers)
+            
+            if let dict = json as? [[String: AnyObject]] {
+                RWFrameworkConfig.setConfigDataAsDictionary(data, key: "project")
+                
+                // TODO: where is this going to come from?
+                func configDisplayStartupMessage() {
+                    let startupMessage = RWFrameworkConfig.getConfigValueAsString("startup_message", group: RWFrameworkConfig.ConfigGroup.notifications)
+                    if (startupMessage.lengthOfBytes(using: String.Encoding.utf8) > 0) {
+                        self.rwUpdateStatus(startupMessage)
+                    }
+                }
+                configDisplayStartupMessage()
+                
+                if letFrameworkRequestWhenInUseAuthorizationForLocation {
+                    _ = requestWhenInUseAuthorizationForLocation()
+                }
+                
+                let listen_enabled = RWFrameworkConfig.getConfigValueAsBool("listen_enabled")
+                if (listen_enabled) {
+                    let geo_listen_enabled = RWFrameworkConfig.getConfigValueAsBool("geo_listen_enabled")
+                    if (!geo_listen_enabled) {
+                        apiPostStreams()
+                    }
+                    startHeartbeatTimer()
+                }
+                
+                let speak_enabled = RWFrameworkConfig.getConfigValueAsBool("speak_enabled")
+                if (speak_enabled) {
+                    startAudioTimer()
+                    startUploadTimer()
+                    rwReadyToRecord()
+                }
+                
+                getProjectGroupsIdProjectsSucceeded = true
+                //getProjectsIdSucceeded = true
+                
+                //  apiGetProjectsIdTags(project_id, session_id: session_id)
+                
+                // a simpler alternative to apiGetProjectsIdTags and it's subsequent calls but needs
+                // to be properly vetted before turning off the more complex calls
+                // apiGetUIConfig(project_id, session_id: session_id)
+            }
+        }
+        catch {
+            print(error)
+        }
+    }
+
 
     // MARK: GET ui config
     

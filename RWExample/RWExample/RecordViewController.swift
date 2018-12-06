@@ -93,7 +93,7 @@ class RecordViewController: UIViewController, RWFrameworkProtocol {
     
     @IBAction func addImage(_ sender: UIButton) {
         let rwf = RWFramework.sharedInstance
-        #if (arch(i386) || arch(x86_64)) && os(iOS)
+        #if targetEnvironment(simulator)
             rwf.doPhotoLibrary()
         #else
             rwf.doImage()

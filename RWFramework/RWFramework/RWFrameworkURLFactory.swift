@@ -14,6 +14,16 @@ open class RWFrameworkURLFactory {
     fileprivate class func api2() -> String {
         return "api/2/"
     }
+    
+    // Returns the preferred language of the device
+    class func preferredLanguage() -> String {
+        let preferredLanguage = Locale.preferredLanguages[0] as String
+        let arr = preferredLanguage.components(separatedBy: "-")
+        if let deviceLanguage = arr.first {
+            return deviceLanguage
+        }
+        return "en"
+    }
 
     class func postUsersURL() -> String {
         return RWFrameworkConfig.getConfigValueAsString("base_url") + api2() + "users/"
@@ -21,6 +31,12 @@ open class RWFrameworkURLFactory {
 
     class func postSessionsURL() -> String {
         return RWFrameworkConfig.getConfigValueAsString("base_url") + api2() + "sessions/"
+    }
+    
+    // MARK: Gets projectgroups URL 
+    // Returns the initial projectgroups GET request's URL as a string.
+    class func getProjectGroupsIdProjectsURL(_ projectgroup_id: NSNumber, latitude: NSNumber, longitude: NSNumber) -> String {
+        return RWFrameworkConfig.getConfigValueAsString("base_url") + api2() + "projectgroups/" + projectgroup_id.stringValue + "/projects" + "/?language_code=" + preferredLanguage() + "&latitude=" + latitude.stringValue + "&longitude=" + longitude.stringValue
     }
 
     class func getProjectsIdURL(_ project_id: NSNumber, session_id: NSNumber) -> String {
