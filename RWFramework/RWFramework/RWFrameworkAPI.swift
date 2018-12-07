@@ -17,7 +17,13 @@ extension RWFramework {
         let token = RWFrameworkConfig.getConfigValueAsString("token", group: RWFrameworkConfig.ConfigGroup.client)
         if (token.lengthOfBytes(using: String.Encoding.utf8) > 0) {
             postUsersSucceeded = true
-            apiPostSessions()
+            print("Calling the projectgroups method")
+            print("this is the location:\(lastRecordedLocation.coordinate.latitude)")
+            let projectgroup_id = RWFrameworkConfig.getConfigValueAsNumber("projectgroup_id")
+            let latitude = (lastRecordedLocation.coordinate.latitude) as NSNumber
+            let longitude = (lastRecordedLocation.coordinate.longitude) as NSNumber
+            apiGetProjectGroupsIdProjects(projectgroup_id, latitude: latitude, longitude: longitude)
+            //apiPostSessions()
         } else {
             httpPostUsers(device_id, client_type: client_type, client_system: client_system) { (data, error) -> Void in
                 if (data != nil) && (error == nil) {
@@ -46,8 +52,14 @@ extension RWFramework {
             }
 
             postUsersSucceeded = true
-
-            apiPostSessions()
+            print("Calling the projectgroups method")
+            print("this is the location:\(lastRecordedLocation.coordinate.latitude)")
+            let projectgroup_id = RWFrameworkConfig.getConfigValueAsNumber("projectgroup_id")
+            let latitude = (lastRecordedLocation.coordinate.latitude) as NSNumber
+            let longitude = (lastRecordedLocation.coordinate.longitude) as NSNumber
+            apiGetProjectGroupsIdProjects(projectgroup_id, latitude: latitude, longitude: longitude)
+            // apiPostSessions() and other GET methods to be moved and call later in their own method.
+           // apiPostSessions()
         }
         catch {
             print(error)
@@ -93,6 +105,7 @@ extension RWFramework {
 
             let project_id = RWFrameworkConfig.getConfigValueAsNumber("project_id")
             apiGetProjectsId(project_id, session_id: session_id)
+           // apiGetProjectGroupsIdProjects(project_id, latitude: 1.1234, longitude: 1.6543)
         }
         catch {
             print(error)
@@ -166,6 +179,7 @@ extension RWFramework {
     // MARK: GET projectgroups
     
     func apiGetProjectGroupsIdProjects(_ projectgroup_id: NSNumber, latitude: NSNumber, longitude: NSNumber) {
+        
         httpGetProjectGroupsIdProjects(projectgroup_id, latitude: latitude, longitude: longitude) { (data, error) -> Void in
             if (data != nil) && (error == nil) {
                 self.getProjectGroupsIdProjectsSuccess(data!, projectgroup_id: projectgroup_id)
@@ -180,10 +194,10 @@ extension RWFramework {
     func getProjectGroupsIdProjectsSuccess(_ data: Data, projectgroup_id: NSNumber) {
         do {
             let json = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.mutableContainers)
-            
-            if let dict = json as? [[String: AnyObject]] {
-                RWFrameworkConfig.setConfigDataAsDictionary(data, key: "project")
-                
+            // Saves the parsed data into User Default as an Array of dictonaries. 
+            if let array = json as? [[String: AnyObject]] {
+               RWFrameworkConfig.setConfigDataAsArray(data, key: "projectgroups")
+
                 // TODO: where is this going to come from?
                 func configDisplayStartupMessage() {
                     let startupMessage = RWFrameworkConfig.getConfigValueAsString("startup_message", group: RWFrameworkConfig.ConfigGroup.notifications)

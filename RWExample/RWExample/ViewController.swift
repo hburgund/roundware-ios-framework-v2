@@ -83,7 +83,23 @@ extension ViewController: RWFrameworkProtocol {
             }
         }
     }
+    
+    func rwGetProjectGroupsIdProjectsSuccess(_ data: Data?) {
+        
+        // You can now access the projectgroups information
+        if let projectgroupsData = RWFrameworkConfig.getConfigDataFromGroup(RWFrameworkConfig.ConfigGroup.projectgroups) as? NSArray {
+            var tempDictionary = [String: AnyObject]()
+            // TODO: append the projectgroup data into struct model for new app.
+            for item in projectgroupsData {
+                tempDictionary = item as! [String : AnyObject]
+                let name = tempDictionary["name"] as! String
+                print("This the the projectgroups item: \(tempDictionary)")
+                print("this is the project name: \(name)")
+            }
+        }
+    }
 
+    
     func rwPostStreamsIdHeartbeatSuccess(_ data: Data?) {
         UIView.animate(withDuration: 0.5, animations: { () -> Void in
             self.heartbeatButton.alpha = 0.0

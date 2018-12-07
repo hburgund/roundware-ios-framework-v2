@@ -16,6 +16,7 @@ open class RWFrameworkConfig {
         case notifications
         case session
         case project
+        case projectgroups
         case server
         case speakers
         case audioTracks
@@ -27,6 +28,7 @@ open class RWFrameworkConfig {
                 case .notifications: return "notifications"
                 case .session: return "session"
                 case .project: return "project"
+                case .projectgroups: return "projectgroups"
                 case .server: return "server"
                 case .speakers: return "speakers"
                 case .audioTracks: return "audiotracks"
@@ -65,6 +67,24 @@ open class RWFrameworkConfig {
             print(error)
         }
     }
+    
+    // Passed JSON data, this function saves that data to NSUserDefaults as an array
+    open class func setConfigDataAsArray(_ data: Data, key: String) {
+        do {
+            let json = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.mutableContainers)
+            
+            if let array = json as? [[String: AnyObject]] {
+                // Convert NSNull into empty strings so they can be written to NSUserDefaults properly
+                
+                UserDefaults.standard.set(array, forKey: key)
+            }
+            
+        }
+        catch {
+            print(error)
+        }
+    }
+
 
     /// Set a config value as a Bool in a particular group, creating it if it doesn't exist
     /// Group defaults to ConfigGroup.Client
