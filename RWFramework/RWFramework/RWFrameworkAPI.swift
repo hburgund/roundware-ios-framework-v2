@@ -17,13 +17,10 @@ extension RWFramework {
         let token = RWFrameworkConfig.getConfigValueAsString("token", group: RWFrameworkConfig.ConfigGroup.client)
         if (token.lengthOfBytes(using: String.Encoding.utf8) > 0) {
             postUsersSucceeded = true
-            print("Calling the projectgroups method")
-            print("this is the location:\(lastRecordedLocation.coordinate.latitude)")
-            let projectgroup_id = RWFrameworkConfig.getConfigValueAsNumber("projectgroup_id")
-            let latitude = (lastRecordedLocation.coordinate.latitude) as NSNumber
-            let longitude = (lastRecordedLocation.coordinate.longitude) as NSNumber
-            apiGetProjectGroupsIdProjects(projectgroup_id, latitude: latitude, longitude: longitude)
-            //apiPostSessions()
+            
+            // Initial API request after user is authinticated.
+            apiInitialRequest()
+           
         } else {
             httpPostUsers(device_id, client_type: client_type, client_system: client_system) { (data, error) -> Void in
                 if (data != nil) && (error == nil) {
@@ -52,14 +49,9 @@ extension RWFramework {
             }
 
             postUsersSucceeded = true
-            print("Calling the projectgroups method")
-            print("this is the location:\(lastRecordedLocation.coordinate.latitude)")
-            let projectgroup_id = RWFrameworkConfig.getConfigValueAsNumber("projectgroup_id")
-            let latitude = (lastRecordedLocation.coordinate.latitude) as NSNumber
-            let longitude = (lastRecordedLocation.coordinate.longitude) as NSNumber
-            apiGetProjectGroupsIdProjects(projectgroup_id, latitude: latitude, longitude: longitude)
-            // apiPostSessions() and other GET methods to be moved and call later in their own method.
-           // apiPostSessions()
+            
+            // Initial API request after user is authinticated.
+            apiInitialRequest()
         }
         catch {
             print(error)
@@ -242,6 +234,30 @@ extension RWFramework {
         }
     }
 
+    // MARK: Validate projectgroup_id first then make the correct initial API request
+    
+    func apiInitialRequest() {
+        // Get projectgroup_id from .plist file
+        let projectgroup_id = RWFrameworkConfig.getConfigValueAsNumber("projectgroup_id")
+        
+        // Prepare the current lat / long values of the device location
+        let latitude = (lastRecordedLocation.coordinate.latitude) as NSNumber
+        let longitude = (lastRecordedLocation.coordinate.longitude) as NSNumber
+        
+        // If greater than ZERO, then proceed to projectgroups GET request
+        if (Int(truncating: projectgroup_id) > 0) {
+            apiGetProjectGroupsIdProjects(projectgroup_id, latitude: latitude, longitude: longitude)
+            print("Calling the projectgroups method")
+            
+            // Please see if the values are correct on real device
+            print("Latitude:\(latitude) / longitude:\(longitude)")
+            
+        } else {
+            // Otherwise, proceed with POST sessions as initial request
+            apiPostSessions() // this will call all other GET methods for tags, ui etc.
+        }
+        
+    }
 
     // MARK: GET ui config
     
