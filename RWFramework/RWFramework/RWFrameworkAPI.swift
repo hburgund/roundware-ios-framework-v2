@@ -245,7 +245,7 @@ extension RWFramework {
         let longitude = (lastRecordedLocation.coordinate.longitude) as NSNumber
         
         // If greater than ZERO, then proceed to projectgroups GET request
-        if (Int(truncating: projectgroup_id) > 0) {
+        if ( projectgroup_id.intValue > 0) {
             apiGetProjectGroupsIdProjects(projectgroup_id, latitude: latitude, longitude: longitude)
             print("Calling the projectgroups method")
             
