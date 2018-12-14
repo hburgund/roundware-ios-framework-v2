@@ -18,7 +18,7 @@ class ProjectGroupViewController: UIViewController, UITableViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // TODO: If (dataSource.projectGroups.count>2) then skip to the next detail view controller.
+        // TODO: If (dataSource.projectGroups.count<2) then skip to the next detail view controller.
         
         RWFramework.sharedInstance.start(false) // You may choose to call this in the AppDelegate
 
