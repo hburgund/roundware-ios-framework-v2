@@ -24,6 +24,7 @@
 		75DFFFE11A7AECC300660B96 /* RWFramework.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 75A7D31F1A76774B00E662A8 /* RWFramework.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		75FE0D571FC5DF8D00BAF45B /* SpeakTagsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75FE0D561FC5DF8D00BAF45B /* SpeakTagsViewController.swift */; };
 		75FE0D5B1FCB039700BAF45B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 75FE0D591FCB039700BAF45B /* Localizable.strings */; };
+		CED062DE21C3240E00F5DD95 /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED062DD21C3240E00F5DD95 /* Project.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -99,6 +100,7 @@
 		75D532021A813EF900DFB873 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		75FE0D561FC5DF8D00BAF45B /* SpeakTagsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakTagsViewController.swift; sourceTree = "<group>"; };
 		75FE0D5A1FCB039700BAF45B /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
+		CED062DD21C3240E00F5DD95 /* Project.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -144,6 +146,7 @@
 		75A7D2A41A745B5300E662A8 /* RWExample */ = {
 			isa = PBXGroup;
 			children = (
+				CED062DA21C323B400F5DD95 /* Project Group */,
 				75A7D2A71A745B5300E662A8 /* AppDelegate.swift */,
 				75A7D2A91A745B5300E662A8 /* ViewController.swift */,
 				75B1E5D9200294F500428DD0 /* Listen */,
@@ -210,6 +213,22 @@
 				75558DD71FF2A305007D16B0 /* ThankYouViewController.swift */,
 			);
 			name = Speak;
+			sourceTree = "<group>";
+		};
+		CED062DA21C323B400F5DD95 /* Project Group */ = {
+			isa = PBXGroup;
+			children = (
+				CED062DC21C323E200F5DD95 /* Model */,
+			);
+			name = "Project Group";
+			sourceTree = "<group>";
+		};
+		CED062DC21C323E200F5DD95 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				CED062DD21C3240E00F5DD95 /* Project.swift */,
+			);
+			name = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -358,6 +377,7 @@
 				75179DF01F76B6B9004A2591 /* ListenTagsViewController.swift in Sources */,
 				75FE0D571FC5DF8D00BAF45B /* SpeakTagsViewController.swift in Sources */,
 				751420111F5DB59300BF7864 /* SpeakViewController.swift in Sources */,
+				CED062DE21C3240E00F5DD95 /* Project.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
