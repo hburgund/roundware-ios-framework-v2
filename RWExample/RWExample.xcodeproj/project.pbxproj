@@ -24,6 +24,7 @@
 		75DFFFE11A7AECC300660B96 /* RWFramework.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 75A7D31F1A76774B00E662A8 /* RWFramework.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		75FE0D571FC5DF8D00BAF45B /* SpeakTagsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75FE0D561FC5DF8D00BAF45B /* SpeakTagsViewController.swift */; };
 		75FE0D5B1FCB039700BAF45B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 75FE0D591FCB039700BAF45B /* Localizable.strings */; };
+		CE83AD0C21C474A900517436 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE83AD0B21C474A900517436 /* Color.swift */; };
 		CED062DE21C3240E00F5DD95 /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED062DD21C3240E00F5DD95 /* Project.swift */; };
 		CED595AC21C4078800267255 /* ProjectGroupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED595AB21C4078800267255 /* ProjectGroupViewController.swift */; };
 		CED595AF21C4081500267255 /* ProjectGroupCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED595AE21C4081500267255 /* ProjectGroupCell.swift */; };
@@ -103,6 +104,7 @@
 		75D532021A813EF900DFB873 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		75FE0D561FC5DF8D00BAF45B /* SpeakTagsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakTagsViewController.swift; sourceTree = "<group>"; };
 		75FE0D5A1FCB039700BAF45B /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
+		CE83AD0B21C474A900517436 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		CED062DD21C3240E00F5DD95 /* Project.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
 		CED595AB21C4078800267255 /* ProjectGroupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectGroupViewController.swift; sourceTree = "<group>"; };
 		CED595AE21C4081500267255 /* ProjectGroupCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectGroupCell.swift; sourceTree = "<group>"; };
@@ -163,6 +165,7 @@
 				75A7D3281A76F5DA00E662A8 /* RWFramework.plist */,
 				75FE0D591FCB039700BAF45B /* Localizable.strings */,
 				75A7D2A51A745B5300E662A8 /* Supporting Files */,
+				CE83AD0921C4747C00517436 /* Helper */,
 			);
 			path = RWExample;
 			sourceTree = "<group>";
@@ -243,6 +246,14 @@
 				CED595AB21C4078800267255 /* ProjectGroupViewController.swift */,
 			);
 			name = Controller;
+			sourceTree = "<group>";
+		};
+		CE83AD0921C4747C00517436 /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				CE83AD0B21C474A900517436 /* Color.swift */,
+			);
+			name = Helper;
 			sourceTree = "<group>";
 		};
 		CED062DA21C323B400F5DD95 /* Project Group */ = {
@@ -406,6 +417,7 @@
 				75A7D2AA1A745B5300E662A8 /* ViewController.swift in Sources */,
 				CED595B121C4087300267255 /* ProjectGroupDataSource.swift in Sources */,
 				75558DD81FF2A305007D16B0 /* ThankYouViewController.swift in Sources */,
+				CE83AD0C21C474A900517436 /* Color.swift in Sources */,
 				75A7D2A81A745B5300E662A8 /* AppDelegate.swift in Sources */,
 				7514200E1F5DAEAB00BF7864 /* ListenViewController.swift in Sources */,
 				75558DD51FF2A2A2007D16B0 /* RecordViewController.swift in Sources */,

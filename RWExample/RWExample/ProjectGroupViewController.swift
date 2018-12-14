@@ -24,6 +24,7 @@ class ProjectGroupViewController: UIViewController, UITableViewDelegate {
 
         // tableView setup.
        tableView.delegate = self
+       tableView.backgroundColor = UIColor.lightGrayCustom
        tableView.reloadData()
 
         // Do any additional setup after loading the view.
