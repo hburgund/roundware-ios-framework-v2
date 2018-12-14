@@ -8,7 +8,7 @@
 
 import Foundation
 
-
+// This to be removed as we replaced it with dataSource model controller.
 typealias ProjectGroup = [Project]
 
 struct Project {

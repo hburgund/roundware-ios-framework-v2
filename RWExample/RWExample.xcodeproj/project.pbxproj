@@ -25,6 +25,9 @@
 		75FE0D571FC5DF8D00BAF45B /* SpeakTagsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75FE0D561FC5DF8D00BAF45B /* SpeakTagsViewController.swift */; };
 		75FE0D5B1FCB039700BAF45B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 75FE0D591FCB039700BAF45B /* Localizable.strings */; };
 		CED062DE21C3240E00F5DD95 /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED062DD21C3240E00F5DD95 /* Project.swift */; };
+		CED595AC21C4078800267255 /* ProjectGroupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED595AB21C4078800267255 /* ProjectGroupViewController.swift */; };
+		CED595AF21C4081500267255 /* ProjectGroupCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED595AE21C4081500267255 /* ProjectGroupCell.swift */; };
+		CED595B121C4087300267255 /* ProjectGroupDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = CED595B021C4087300267255 /* ProjectGroupDataSource.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -101,6 +104,9 @@
 		75FE0D561FC5DF8D00BAF45B /* SpeakTagsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakTagsViewController.swift; sourceTree = "<group>"; };
 		75FE0D5A1FCB039700BAF45B /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		CED062DD21C3240E00F5DD95 /* Project.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
+		CED595AB21C4078800267255 /* ProjectGroupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectGroupViewController.swift; sourceTree = "<group>"; };
+		CED595AE21C4081500267255 /* ProjectGroupCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectGroupCell.swift; sourceTree = "<group>"; };
+		CED595B021C4087300267255 /* ProjectGroupDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectGroupDataSource.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -215,10 +221,37 @@
 			name = Speak;
 			sourceTree = "<group>";
 		};
+		CE4AE84821C33A4B00441582 /* Model Controller */ = {
+			isa = PBXGroup;
+			children = (
+				CED595B021C4087300267255 /* ProjectGroupDataSource.swift */,
+			);
+			name = "Model Controller";
+			sourceTree = "<group>";
+		};
+		CE4AE84A21C33A6400441582 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				CED595AE21C4081500267255 /* ProjectGroupCell.swift */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		CE4AE84B21C33A6D00441582 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				CED595AB21C4078800267255 /* ProjectGroupViewController.swift */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
 		CED062DA21C323B400F5DD95 /* Project Group */ = {
 			isa = PBXGroup;
 			children = (
 				CED062DC21C323E200F5DD95 /* Model */,
+				CE4AE84821C33A4B00441582 /* Model Controller */,
+				CE4AE84A21C33A6400441582 /* View */,
+				CE4AE84B21C33A6D00441582 /* Controller */,
 			);
 			name = "Project Group";
 			sourceTree = "<group>";
@@ -369,13 +402,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CED595AC21C4078800267255 /* ProjectGroupViewController.swift in Sources */,
 				75A7D2AA1A745B5300E662A8 /* ViewController.swift in Sources */,
+				CED595B121C4087300267255 /* ProjectGroupDataSource.swift in Sources */,
 				75558DD81FF2A305007D16B0 /* ThankYouViewController.swift in Sources */,
 				75A7D2A81A745B5300E662A8 /* AppDelegate.swift in Sources */,
 				7514200E1F5DAEAB00BF7864 /* ListenViewController.swift in Sources */,
 				75558DD51FF2A2A2007D16B0 /* RecordViewController.swift in Sources */,
 				75179DF01F76B6B9004A2591 /* ListenTagsViewController.swift in Sources */,
 				75FE0D571FC5DF8D00BAF45B /* SpeakTagsViewController.swift in Sources */,
+				CED595AF21C4081500267255 /* ProjectGroupCell.swift in Sources */,
 				751420111F5DB59300BF7864 /* SpeakViewController.swift in Sources */,
 				CED062DE21C3240E00F5DD95 /* Project.swift in Sources */,
 			);
