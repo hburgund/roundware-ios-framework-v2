@@ -19,6 +19,8 @@ class ProjectGroupViewController: UIViewController, UITableViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         // TODO: If (dataSource.projectGroups.count<2) then skip to the next detail view controller.
+        // Show the spinning indicator in the status bar onces the view loads.
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
         
         RWFramework.sharedInstance.start(false) // You may choose to call this in the AppDelegate
 
@@ -95,7 +97,8 @@ extension ProjectGroupViewController: RWFrameworkProtocol {
             for item in projects {
                 print("Project Name: \(item.name)")
                 print("Project ID: \(item.projectId)")
-                print("Project Image: \(item.thumbnailURL)")
+                print("Project URL: \(item.thumbnailURL)")
+                print("Project URL object: \(item.projectImageURL)")
                 print("*****************************************")
             }
         }

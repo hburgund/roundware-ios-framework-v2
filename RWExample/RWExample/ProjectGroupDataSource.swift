@@ -32,8 +32,20 @@ extension ProjectGroupDataSource: UITableViewDataSource {
         let project: Project
         project = projectGroups[indexPath.row]
         cell.projectName = project.name
-        return cell
+        cell.projectDescription = project.description
         
+        // Asynchronously fetch the project image and update cell UIImageView.image.
+        project.getProjectImage(url: project.projectImageURL) { (image) in
+            if let image = image {
+                DispatchQueue.main.async {
+                    cell.projectThumbnail = image
+                    // Hide the spinning indicatior in the status bar at this point.
+                    UIApplication.shared.isNetworkActivityIndicatorVisible = false
+
+                }
+            }
+        }
+        
+        return cell
     }
-    
 }
