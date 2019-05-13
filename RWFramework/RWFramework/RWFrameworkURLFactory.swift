@@ -117,6 +117,10 @@ open class RWFrameworkURLFactory {
     class func getSpeakersURL(_ dict: [String:String]) -> String {
         return "\(api())/speakers/\(dict.toUrlQuery())"
     }
+    
+    class func getArrowsURL(_ dict: [String:String]) -> String {
+        return "\(api())/arrows/\(dict.toUrlQuery())"
+    }
 }
 
 fileprivate extension Dictionary where Key == String, Value == String {

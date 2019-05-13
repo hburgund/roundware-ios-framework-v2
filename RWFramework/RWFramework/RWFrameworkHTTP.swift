@@ -203,6 +203,10 @@ extension RWFramework: URLSessionDelegate, URLSessionTaskDelegate, URLSessionDat
         let body = ["session_id": session_id, "event_type": event_type, "data": data ?? "", "latitude": latitude, "longitude": longitude, "client_time": client_time, "tag_ids": tag_ids] as [String : Any]
         return postData(to: url, postData: body)
     }
+    
+    public func httpGetArrows(_ dict: [String:String]) -> Promise<Data> {
+        return getData(from: RWFrameworkURLFactory.getArrowsURL(dict))
+    }
 
 // MARK: - Generic functions
 

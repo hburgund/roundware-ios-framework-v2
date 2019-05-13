@@ -143,6 +143,11 @@ import CoreLocation
     @objc optional func rwPostEventsSuccess(_ data: Data)
     /// Sent in the case that the server can not post an event
     @objc optional func rwPostEventsFailure(_ error: Error)
+    
+    /// Sent after the server successfully gets arrow info
+    @objc optional func rwGetArrowsSuccess(_ data: Data)
+    /// Sent in the case that the server can not get asset info
+    @objc optional func rwGetArrowsFailure(_ error: Error)
 
 // MARK: metadata
 
@@ -628,6 +633,22 @@ extension RWFramework {
                 self.dam { rwfp.rwPostEventsFailure?(error) }
             } else {
                 self.alertOK(self.LS("RWFramework - rwPostEventsFailure"), message: error.localizedDescription)
+            }
+        }
+    }
+    
+    func rwGetArrowsSuccess(_ data: Data) {
+        protocaller { (rwfp, _) -> Void in
+            self.dam { rwfp.rwGetArrowsSuccess?(data) }
+        }
+    }
+    
+    func rwGetArrowsFailure(_ error: Error) {
+        protocaller { (rwfp, _) -> Void in
+            if (rwfp.rwGetArrowsFailure != nil) {
+                self.dam { rwfp.rwGetArrowsFailure?(error) }
+            } else {
+                self.alertOK(self.LS("RWFramework - rwGetArrowsFailure"), message: error.localizedDescription)
             }
         }
     }

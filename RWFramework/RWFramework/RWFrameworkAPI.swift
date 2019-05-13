@@ -125,6 +125,7 @@ extension RWFramework {
         self.apiGetProjectsIdTags(project_id, session_id: session_id)
         self.apiGetUIConfig(project_id, session_id: session_id)
         self.apiGetProjectsIdUIGroups(project_id, session_id: session_id)
+        self.apiGetArrows(["project_id": project_id.stringValue, "active": "true"])
         self.apiGetTagCategories()
         return self.apiGetProjectsId(project_id, session_id: session_id).then { data -> Project in
             RWFrameworkConfig.setConfigDataAsDictionary(data, key: "project")
@@ -603,6 +604,18 @@ extension RWFramework {
             
         }
     }
+    
+    public func apiGetArrows(_ dict: [String:String]) -> Promise<[Data]> {
+        return httpGetArrows(dict).then { data -> [Data] in
+            UserDefaults.standard.set(data, forKey: "arrows")
+            self.rwGetArrowsSuccess(data)
+            return [data]
+            }.catch { error in
+                self.rwGetArrowsFailure(error)
+                self.apiProcessError(nil, error: error, caller: "apiGetArrows")
+        }
+    }
+    
 
     // MARK: GET events id
     // Not needed on client - not implementing for now
