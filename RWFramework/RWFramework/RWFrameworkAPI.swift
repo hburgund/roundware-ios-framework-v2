@@ -608,6 +608,8 @@ extension RWFramework {
     public func apiGetArrows(_ dict: [String:String]) -> Promise<[Data]> {
         return httpGetArrows(dict).then { data -> [Data] in
             UserDefaults.standard.set(data, forKey: "arrows")
+            let arrows = UserDefaults.standard.object(forKey: "arrows") as? [Data]
+            print("🙋 arrows: \(String(describing: data))")
             self.rwGetArrowsSuccess(data)
             return [data]
             }.catch { error in

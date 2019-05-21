@@ -162,4 +162,35 @@ extension CLLocation {
     func toWaypoint() -> Waypoint {
         return Waypoint(latitude: coordinate.latitude, longitude: coordinate.longitude)!
     }
+    
+    /// Returns the shortest distance (measured in meters) from the current object's location to the imaginary line running between the two specified locations.
+    /// https://gist.github.com/pimnijman/f4a821fe2347632a27b940c70247a256
+    /// - Parameters:
+    ///   - start: The first location that makes up the imaginary line.
+    ///   - end: The second location that makes up the imaginary line.
+    /// - Returns: The shortest distance (in meters) between the current object's location and the imaginary line.
+    func distanceToLine(from start: CLLocation, to end: CLLocation) -> CLLocationDistance {
+        let s0lat = degreesToRadians(coordinate.latitude)
+        let s0lng = degreesToRadians(coordinate.longitude)
+        let s1lat = degreesToRadians(start.coordinate.latitude)
+        let s1lng = degreesToRadians(start.coordinate.longitude)
+        let s2lat = degreesToRadians(end.coordinate.latitude)
+        let s2lng = degreesToRadians(end.coordinate.longitude)
+        let s2s1lat = s2lat - s1lat
+        let s2s1lng = s2lng - s1lng
+        let u = ((s0lat - s1lat) * s2s1lat + (s0lng - s1lng) * s2s1lng) / (s2s1lat * s2s1lat + s2s1lng * s2s1lng)
+        if u <= 0.0 {
+            return distance(from: start)
+        } else if u >= 1.0 {
+            return distance(from: end)
+        } else {
+            let sa = CLLocation(latitude: coordinate.latitude - start.coordinate.latitude,
+                                longitude: coordinate.longitude - start.coordinate.longitude)
+            let sb = CLLocation(latitude: u * (end.coordinate.latitude - start.coordinate.latitude),
+                                longitude: u * (end.coordinate.longitude - start.coordinate.longitude))
+            return sa.distance(from: sb)
+        }
+    }
+    
+    private func degreesToRadians(_ degrees: Double) -> Double { return degrees * .pi / 180.0 }
 }
