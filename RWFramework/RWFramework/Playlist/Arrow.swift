@@ -73,12 +73,33 @@ extension Arrow {
             )!
     }
     
+    static func from(data: Data) throws -> [Arrow] {
+        let arrows = try JSONDecoder().decode([Arrow].self, from: data)
+        return arrows.map { obj in
+            return Arrow(
+                id: obj.id,
+                active: obj.active,
+                startPoint: obj.startPoint,
+                endPoint: obj.endPoint,
+                width: obj.width,
+                audioUri: obj.audioUri,
+                projectId: obj.projectId
+            )
+        }
+    }
+    
     func resume() {
+        if arrowPlayer == nil {
+            arrowPlayer = AVPlayer(url: audioUri!)
+        }
         arrowPlayer?.play()
     }
     
     func pause() {
-        arrowPlayer?.pause()
+        if arrowPlayer != nil {
+            let s = arrowPlayer?.status
+            arrowPlayer?.pause()
+        }
     }
     
     public func distance(to loc: CLLocation) -> Double {
@@ -96,9 +117,9 @@ extension Arrow {
 //        this needs to be nearest spot on arrow, not nearest point
         let nearestLocation = CLLocation(latitude: nearestPoint.x, longitude: nearestPoint.y)
         let distFromArrow = nearestLocation.distance(from: loc)
+        let distFromArrow = loc.distanceToLine(from: start, to: end)
         print("distance from arrow \(id): \(distFromArrow) m")
-        let distFromArrow2 = loc.distanceToLine(from: start, to: end)
-        return distFromArrow2
+        return distFromArrow
     }
     
 //    public func perpendicularDistance(to loc: CLLocation) -> Double {
@@ -140,45 +161,4 @@ extension Arrow {
 //        }
 //    }
     
-//    static func from(data: Data) throws -> [Arrow] {
-//        let items = try JSON(data: data)
-    
-//        return items.array?.compactMap { item in
-//            let start_point: CLLocationCoordinate2D?
-//            if let lat = item["start_point"].coordinates[1].double, let lng = item["start_point"].coordinates[0].double {
-//                start_point = CLLocationCoordinate2D
-//            } else {
-//                start_point = nil
-//            }
-//
-//            var coordsShape: Geometry? = nil
-//            if let shape = item["shape"].dictionary, let coords = shape["coordinates"]![0][0].array {
-//                // TODO: Handle actual multi-polygons
-//                coordsShape = Polygon(shell: LinearRing(points: coords.map { p in
-//                    Coordinate(x: p[0].double!, y: p[1].double!)
-//                })!, holes: nil)
-//            }
-//
-//            // Remove milliseconds from the creation date.
-//            let createdString = item["created"].string!.replacingOccurrences(
-//                of: "\\.\\d+", with: "", options: .regularExpression
-//            )
-    
-//            guard let id = item["id"].int
-//                let audio_uri = item["audio_uri"].string
-//                else { return nil }
-    
-//            return Arrow(
-//                id: id
-//                audio_uri: audio_uri
-//                length: item["audio_length_in_seconds"].double ?? 0,
-//                createdDate: dateFormatter.date(from: createdString)!,
-//                tags: item["tag_ids"].array!.map { $0.int! },
-//                shape: coordsShape,
-//                weight: item["weight"].double ?? 0,
-//                description: item["description"].string ?? "",
-//                activeRegion: (item["start_time"].double!)...(item["end_time"].double!)
-//            )
-//            } ?? []
-//    }
 }

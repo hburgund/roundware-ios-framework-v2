@@ -605,16 +605,16 @@ extension RWFramework {
         }
     }
     
-    public func apiGetArrows(_ dict: [String:String]) -> Promise<[Data]> {
-        return httpGetArrows(dict).then { data -> [Data] in
+    public func apiGetArrows(_ dict: [String:String]) -> Promise<[Arrow]> {
+        return httpGetArrows(dict).then { data -> [Arrow] in
             UserDefaults.standard.set(data, forKey: "arrows")
             let arrows = UserDefaults.standard.object(forKey: "arrows") as? [Data]
             print("🙋 arrows: \(String(describing: data))")
             self.rwGetArrowsSuccess(data)
-            return [data]
-            }.catch { error in
-                self.rwGetArrowsFailure(error)
-                self.apiProcessError(nil, error: error, caller: "apiGetArrows")
+            return try Arrow.from(data: data)
+        }.catch { error in
+            self.rwGetArrowsFailure(error)
+            self.apiProcessError(nil, error: error, caller: "apiGetArrows")
         }
     }
     

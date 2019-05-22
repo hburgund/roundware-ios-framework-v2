@@ -38,6 +38,7 @@ class Playlist {
     // audio tracks, background and foreground
     private(set) var speakers: [Speaker]? = nil
     private(set) var tracks: [AudioTrack]? = nil
+    private(set) var arrows: [Arrow]? = nil
 
     private var demoStream: AVPlayer? = nil
     private var demoLooper: Any? = nil
@@ -110,6 +111,41 @@ extension Playlist {
             print("playing \(speakers.count) speakers")
             self.speakers = speakers
             self.updateSpeakerVolumes()
+        }
+    }
+    
+    /// Prepares all the arrows for this project.
+    @discardableResult
+    private func initArrows() -> Promise<[Arrow]> {
+        return RWFramework.sharedInstance.apiGetArrows([
+            "project_id": String(project.id),
+            "active": "true"
+            ]).then { arrows in
+                print("project has \(arrows.count) arrows")
+                print("arrow 1: \(arrows[0])")
+                self.arrows = arrows
+                self.updateArrowPlayState()
+        }
+    }
+    
+    /**
+     Update the state of all arrows depending on whether listener is within arrow.width
+     If within arrow.width, play/resume arrow audio, otherwise pause
+     */
+    public func updateArrowPlayState() {
+        // check distance to arrow
+        if let params = self.currentParams, let arrows = self.arrows {
+            for arrow in arrows {
+                // if < arrow.width, play/resume arrow audio else pause arrow audio
+                if arrow.distanceFrom(at: params.location) <= Double(arrow.width ?? 10) {
+                    print("arrow audio should play")
+                    arrow.resume()
+                    
+                } else {
+                    print("arrow audio should pause")
+                    arrow.pause()
+                }
+            }
         }
     }
 
@@ -304,6 +340,7 @@ extension Playlist {
     
     private func updateParams() {
         updateSpeakerVolumes()
+        updateArrowPlayState()
         // TODO: Use a filter to clear data for assets we've moved away from.
         
         // Tell our tracks to play any new assets.
@@ -355,6 +392,9 @@ extension Playlist {
         // Start playing background music from speakers.
         initSpeakers()
         
+        // Initialize arrows
+        initArrows()
+        
         // Retrieve the list of tracks
         initTracks()
 
@@ -372,8 +412,9 @@ extension Playlist {
     func pause() {
         if RWFramework.sharedInstance.isPlaying {
             RWFramework.sharedInstance.isPlaying = false
-            speakers?.forEach { $0.pause() }
-            tracks?.forEach { $0.pause() }
+//            speakers?.forEach { $0.pause() }
+            arrows?.forEach { $0.pause() }
+//            tracks?.forEach { $0.pause() }
             if demoLooper != nil {
                 demoStream?.pause()
             }
@@ -383,8 +424,9 @@ extension Playlist {
     func resume() {
         if !RWFramework.sharedInstance.isPlaying {
             RWFramework.sharedInstance.isPlaying = true
-            speakers?.forEach { $0.resume() }
-            tracks?.forEach { $0.resume() }
+//            speakers?.forEach { $0.resume() }
+            arrows?.forEach { $0.resume() }
+//            tracks?.forEach { $0.resume() }
             if demoLooper != nil {
                 demoStream?.play()
             }
